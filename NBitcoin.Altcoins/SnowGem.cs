@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NBitcoin.Altcoins
 {
-    // Reference: https://github.com/z-classic/zclassic/blob/master/src/chainparams.cpp
+    // Reference: https://github.com/Snowgem/Snowgem/blob/master/src/chainparams.cpp
     public class SnowGem : NetworkSetBase
     {
         public static SnowGem Instance { get; } = new SnowGem();
@@ -82,28 +82,46 @@ namespace NBitcoin.Altcoins
             NetworkBuilder builder = new NetworkBuilder();
             builder.SetConsensus(new Consensus()
             {
-                SubsidyHalvingInterval = 840000,
+                SubsidyHalvingInterval = 60 * 24 * 365 * 4,
                 MajorityEnforceBlockUpgrade = 750,
                 MajorityRejectBlockOutdated = 950,
                 MajorityWindow = 4000,
+                
+                // not found in chainparams.cpp
                 BIP34Hash = new uint256("0x0007104ccda289427919efc39dc9e4d499804b7bebc22df55f8b834301260602"), // (Genesis)
-                PowLimit = new Target(new uint256("07ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")),
+                
+                PowLimit = new Target(new uint256("0007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")),
+                
+                // not found
                 PowTargetTimespan = TimeSpan.FromSeconds(14 * 24 * 60 * 60), //TODO ? - maxTipAge = 24 * 60 * 60
-                PowTargetSpacing = TimeSpan.FromSeconds(2.5 * 60),
+                
+                
+                PowTargetSpacing = TimeSpan.FromSeconds(1 * 60),
+                
+                // found 3, not sure which use
                 PowAllowMinDifficultyBlocks = false,
+                
+                // not found
                 PowNoRetargeting = false,
+                
+                // not found
                 RuleChangeActivationThreshold = 1916,
+                
+                // not found
                 MinerConfirmationWindow = 2016,
+                
+                // not found
                 CoinbaseMaturity = 100,
-                MinimumChainWork = new uint256("0000000000000000000000000000000000000000000000000002f67046eb6a34"),
+                
+                MinimumChainWork = new uint256("0x000000000000000000000000000000000000000000000000000000000000000d"),
                 ConsensusFactory = SnowGemConsensusFactory.Instance,
                 SupportSegwit = false
             })
-            .SetBase58Bytes(Base58Type.PUBKEY_ADDRESS, new byte[] { 0x1C, 0xB8 })
-            .SetBase58Bytes(Base58Type.SCRIPT_ADDRESS, new byte[] { 0x1C, 0xBD })
-            .SetBase58Bytes(Base58Type.SECRET_KEY, new byte[] { 0x80 })
-            .SetBase58Bytes(Base58Type.EXT_PUBLIC_KEY, new byte[] { 0x04, 0x88, 0xB2, 0x1E })
-            .SetBase58Bytes(Base58Type.EXT_SECRET_KEY, new byte[] { 0x04, 0x88, 0xAD, 0xE4 })
+            .SetBase58Bytes(Base58Type.PUBKEY_ADDRESS, new byte[] { 0x1D,0x25 })
+            .SetBase58Bytes(Base58Type.SCRIPT_ADDRESS, new byte[] { 0x1C,0xBA })
+            .SetBase58Bytes(Base58Type.SECRET_KEY, new byte[] { 0xEF })
+            .SetBase58Bytes(Base58Type.EXT_PUBLIC_KEY, new byte[] { 0x04,0x35,0x87,0xCF })
+            .SetBase58Bytes(Base58Type.EXT_SECRET_KEY, new byte[] { 0x04,0x35,0x83,0x94 })
             .SetMagic(0x24e92764)
             .SetPort(8033)
             .SetRPCPort(8023)
